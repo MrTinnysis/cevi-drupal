@@ -1,6 +1,6 @@
 .content-header {
-    background-color: #34383c;
-    background-image: linear-gradient(to bottom, #34383c, #46494C);
+    background-color: #c41333;
+    background-image: linear-gradient(to bottom, #c41333, #a3102b);
     color: white;
     position: relative;
     min-height: 20px;
@@ -11,7 +11,7 @@
 }
 
 .tabs__tab {
-    background-color: #7b7b7b;
+    background-color: #333791;
     color: white;
 }
 
@@ -20,11 +20,11 @@
 }
 
 .tabs__tab:hover a {
-    color: #0074bd;
+    color: #c41333;
 }
 
 .tabs__tab.is-active a {
-    color: #0074bd;
+    color: #c41333;
 }
 
 .tabs.secondary {
@@ -41,24 +41,24 @@
 }
 
 .is-horizontal .tabs.secondary .tabs__tab {
-    background-color: #7b7b7b;
+    background-color: #333791;
     border-radius: 4px;
 }
 
 .is-horizontal .tabs.secondary .tabs__tab:hover {
     background-color: white;
-    border: 1px solid #0074bd;
+    border: 1px solid #c41333;
 }
 
 .is-horizontal .tabs.secondary .tabs__tab.is-active {
     background-color: white;
-    border: 1px solid #0074bd;
+    border: 1px solid #c41333;
 }
 
 body::after {
-    content: 'Made with ❤ by btemperli';
+    content: 'Made with \2764 by btemperli';
     color: white;
-    background-color: #34383c;
+    background-color: #c41333;
     position: fixed;
     bottom: 0;
     width: 100vw;

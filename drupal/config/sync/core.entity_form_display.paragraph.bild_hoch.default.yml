@@ -1,0 +1,26 @@
+uuid: b798a05d-c493-44cb-be6e-1728502ffd42
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.bild_hoch.field_bild_hoch
+    - image.style.medium
+    - paragraphs.paragraphs_type.bild_hoch
+  module:
+    - image
+id: paragraph.bild_hoch.default
+targetEntityType: paragraph
+bundle: bild_hoch
+mode: default
+content:
+  field_bild_hoch:
+    weight: 0
+    settings:
+      preview_image_style: medium
+      progress_indicator: throbber
+    third_party_settings: {  }
+    type: image_image
+    region: content
+hidden:
+  created: true
+  status: true

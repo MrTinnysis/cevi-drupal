@@ -1,11 +1,11 @@
 uuid: eb76eb7c-70c3-4296-960b-673b5f7702af
-name: 'Cevi Drupal'
+name: 'Cevi Steffisburg'
 mail: drupal@cevi.ch
 slogan: ''
 page:
   403: /node/23
   404: /node/22
-  front: /node/1
+  front: /node/31
 admin_compact_mode: false
 weight_select_max: 100
 langcode: de

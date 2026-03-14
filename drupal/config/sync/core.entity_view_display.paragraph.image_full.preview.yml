@@ -1,0 +1,31 @@
+uuid: d6c3c63e-da4c-4a9c-9d8f-7f3932937173
+langcode: de
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.image_full.field_image_full
+    - image.style.background_desktop
+    - paragraphs.paragraphs_type.image_full
+  module:
+    - layout_builder
+    - media
+third_party_settings:
+  layout_builder:
+    allow_custom: false
+    enabled: false
+id: paragraph.image_full.preview
+targetEntityType: paragraph
+bundle: image_full
+mode: preview
+content:
+  field_image_full:
+    type: media_thumbnail
+    weight: 0
+    label: hidden
+    settings:
+      image_style: background_desktop
+      image_link: ''
+    third_party_settings: {  }
+    region: content
+hidden: {  }

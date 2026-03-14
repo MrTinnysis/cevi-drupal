@@ -1,0 +1,14 @@
+uuid: 9a3fdf14-3020-4f56-8009-034d40a70926
+langcode: de
+status: true
+dependencies: {  }
+name: hochformat
+label: Hochformat
+effects:
+  63c4e982-7928-4dd1-a90a-41b5675f9be6:
+    uuid: 63c4e982-7928-4dd1-a90a-41b5675f9be6
+    id: image_resize
+    weight: 1
+    data:
+      width: 906
+      height: 1280

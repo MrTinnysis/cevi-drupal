@@ -7,7 +7,13 @@ dependencies:
     - image.style.background_desktop
     - paragraphs.paragraphs_type.image_full
   module:
+    - layout_builder
+    - layout_discovery
     - media
+third_party_settings:
+  layout_builder:
+    allow_custom: false
+    enabled: false
 id: paragraph.image_full.default
 targetEntityType: paragraph
 bundle: image_full

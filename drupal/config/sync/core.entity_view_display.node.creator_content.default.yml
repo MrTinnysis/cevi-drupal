@@ -1,0 +1,29 @@
+uuid: 5e708fe0-bdbd-4da8-8212-2ff7786f8514
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.field.node.creator_content.body
+    - node.type.creator_content
+  module:
+    - text
+    - user
+id: node.creator_content.default
+targetEntityType: node
+bundle: creator_content
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  langcode: true

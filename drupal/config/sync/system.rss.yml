@@ -1,7 +1,7 @@
 _core:
   default_config_hash: TlH7NNk46phfxu1mSUfwg1C0YqaGsUCeD4l9JQnQlDU
-channel:
-  description: ''
 items:
-  limit: 10
-  view_mode: rss
+  view_mode: teaser
+  limit: 8
+channel:
+  description: 'Erlebnisse, Gemeinschaft am Lagerfeuer, Spiel und Sport, Geschichten, Singen... - das alles und noch viel mehr geniessen Kinder vom Kindergarten bis zur 7. Klasse im Cevi Steffisburg. In drei Altersstufen erleben die Kinder spannende Cevi-Nachmittage und lernen dabei sich selbst und andere Menschen besser kennen. '
