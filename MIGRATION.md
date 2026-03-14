@@ -66,7 +66,39 @@ docker compose exec drupal chown -R www-data:www-data /var/www/html/web/sites/de
 rm -rf /tmp/web
 ```
 
-## 7. Verify
+## 7. Post-import cleanup
+
+### Disable maintenance mode and uninstall shield
+
+```bash
+docker compose exec drupal php vendor/drush/drush/drush.php sset system.maintenance_mode 0
+docker compose exec drupal php vendor/drush/drush/drush.php pmu shield -y
+docker compose exec drupal php vendor/drush/drush/drush.php cr
+```
+
+### Enable the admin theme
+
+```bash
+docker compose exec drupal php vendor/drush/drush/drush.php theme:enable claro -y
+```
+
+### Search for remaining hardcoded domain links
+
+Internal links pointing to old hostnames (`cevisteffisburg.ch`, `cevistb.uber.space`)
+should use relative paths instead. Scan the active config:
+
+```bash
+docker compose exec mariadb mariadb -udrupal -pchange-me drupal \
+  -e "SELECT collection, name FROM config WHERE data LIKE '%cevisteffisburg.ch%' OR data LIKE '%cevistb.uber.space%';"
+```
+
+The config/sync YMLs already have these replaced with relative links (e.g. `/form/contact-form`).
+After `drush cim` they should be gone. If any remain, re-run `drush cim -y` or update them manually.
+
+Email addresses (`@cevisteffisburg.ch`) in webform handlers are intentional — they are
+the real recipient addresses and should remain.
+
+## 8. Verify
 
 ```bash
 curl -sI http://localhost/
