@@ -1,0 +1,16 @@
+uuid: 68803b58-84a0-4192-94bf-c81dc970b1d4
+langcode: de
+status: true
+dependencies:
+  module:
+    - type_style
+third_party_settings:
+  type_style:
+    color: '#000000'
+    icon: ''
+id: bild_hoch
+label: 'Bild Variabel'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

@@ -6,6 +6,7 @@ module:
   admin_toolbar_tools: 0
   allow_iframe: 0
   automated_cron: 0
+  ban: 0
   block: 0
   block_content: 0
   breakpoint: 0
@@ -37,6 +38,9 @@ module:
   image: 0
   image_captcha: 0
   language: 0
+  layout_builder: 0
+  layout_builder_expose_all_field_blocks: 0
+  layout_discovery: 0
   leaflet: 0
   link: 0
   locale: 0
@@ -58,6 +62,7 @@ module:
   swisstopo: 0
   system: 0
   taxonomy: 0
+  telephone: 0
   text: 0
   token: 0
   toolbar: 0
@@ -67,9 +72,13 @@ module:
   user: 0
   views_ui: 0
   webform: 0
+  webform_attachment: 0
+  webform_demo_event_registration: 0
   webform_image_select: 0
   webform_node: 0
+  webform_options_limit: 0
   webform_scheduled_email: 0
+  webform_share: 0
   webform_ui: 0
   menu_link_content: 1
   pathauto: 1

@@ -1,46 +1,69 @@
-uuid: a1e10a2c-2d01-421a-8b0e-4ecb2550f5b4
+uuid: 6b51cdb9-3162-4f7a-8cad-12a8948da07b
 langcode: de
 status: open
 dependencies:
   module:
-    - type_style
-third_party_settings:
-  type_style:
-    color: '#000000'
-    icon: ''
+    - webform_options_limit
+    - webform_scheduled_email
+  enforced:
+    module:
+      - webform_demo_event_registration
+_core:
+  default_config_hash: 9buHVzduQ8EYpVplcJjzjTEl97t8SKn4gD5aw2DQ0gM
 weight: 0
 open: null
 close: null
-uid: 1
+uid: null
 template: false
 archive: false
-id: contact_form
-title: Kontaktformular
-description: ''
-categories: {  }
-elements: |-
-  name:
-    '#type': textfield
-    '#title': Name
-    '#required': true
-  email:
-    '#type': email
-    '#title': E-Mail
-    '#autocomplete': 'off'
-    '#required': true
-    '#required_error': 'Auf deine Anfrage möchten wir dir eine Antwort zukommen lassen können. Bitte gib eine E-Mailadresse an.'
-  message:
-    '#type': textarea
-    '#title': Nachricht
-    '#required': true
-    '#required_error': 'Eine Anfrage ohne Inhalt? Nee. Bitte ausfüllen!'
-  captcha_02:
-    '#type': captcha
-    '#captcha_type': recaptcha/reCAPTCHA
+id: demo_event_registration
+title: 'Demo: Event Registration'
+description: 'A demonstration of an event registration form.'
+categories:
+  - Demo
+elements: |
+  event_information:
+    '#type': fieldset
+    '#title': 'Event Information'
+    event_title:
+      '#type': webform_computed_token
+      '#title': 'Event Title'
+      '#value': '[webform_submission:node:title]'
+    event_date:
+      '#type': webform_computed_token
+      '#title': 'Event Date'
+      '#value': '[webform_submission:node:field_webform_demo_event_date:date:short]'
+  information:
+    '#title': 'Your Information'
+    '#type': fieldset
+    first_name:
+      '#title': 'First Name'
+      '#type': textfield
+      '#required': true
+    last_name:
+      '#title': 'Last Name'
+      '#type': textfield
+      '#required': true
+    email:
+      '#type': email
+      '#title': Email
+      '#required': true
+  other:
+    '#title': 'Other Information'
+    '#type': fieldset
+    teeshirt:
+      '#type': select
+      '#title': 'Tee shirt size'
+      '#options':
+        XS: 'XS - Extra Small'
+        S: 'S - Small'
+        M: 'M - Medium'
+        L: 'L - Large'
+        XL: 'XL - Extra Large'
   actions:
     '#type': webform_actions
     '#title': 'Submit button(s)'
-    '#submit__label': Abschicken
+    '#submit__label': Register
 css: ''
 javascript: ''
 settings:
@@ -49,11 +72,11 @@ settings:
   ajax_progress_type: ''
   ajax_effect: ''
   ajax_speed: null
-  page: true
+  page: false
   page_submit_path: ''
   page_confirm_path: ''
   page_theme_name: ''
-  form_title: both
+  form_title: source_entity_webform
   form_submit_once: false
   form_open_message: ''
   form_close_message: ''
@@ -86,14 +109,14 @@ settings:
   form_method: ''
   form_action: ''
   share: false
-  share_node: false
+  share_node: true
   share_theme_name: ''
   share_title: true
   share_page_body_attributes: {  }
   submission_label: ''
   submission_exception_message: ''
   submission_locked_message: ''
-  submission_log: false
+  submission_log: true
   submission_excluded_elements: {  }
   submission_exclude_empty: false
   submission_exclude_empty_checkbox: false
@@ -145,10 +168,10 @@ settings:
   draft_loaded_message: ''
   draft_pending_single_message: ''
   draft_pending_multiple_message: ''
-  confirmation_type: inline
+  confirmation_type: page
   confirmation_url: ''
   confirmation_title: ''
-  confirmation_message: "<strong>Danke f&uuml;r deine Nachricht!</strong><br />\r\n<br />\r\nWir werden uns in den n&auml;chsten Tagen bei dir melden."
+  confirmation_message: 'Thank you for registering.'
   confirmation_attributes: {  }
   confirmation_back: true
   confirmation_back_label: ''
@@ -183,35 +206,27 @@ access:
       - anonymous
       - authenticated
     users: {  }
-    permissions: {  }
   view_any:
     roles: {  }
     users: {  }
-    permissions: {  }
   update_any:
     roles: {  }
     users: {  }
-    permissions: {  }
   delete_any:
     roles: {  }
     users: {  }
-    permissions: {  }
   purge_any:
     roles: {  }
     users: {  }
-    permissions: {  }
   view_own:
     roles: {  }
     users: {  }
-    permissions: {  }
   update_own:
     roles: {  }
     users: {  }
-    permissions: {  }
   delete_own:
     roles: {  }
     users: {  }
-    permissions: {  }
   administer:
     roles: {  }
     users: {  }
@@ -225,31 +240,31 @@ access:
     users: {  }
     permissions: {  }
 handlers:
-  e_mail:
+  email_notification:
     id: email
-    handler_id: e_mail
-    label: E-Mail
+    handler_id: email_notification
+    label: 'Email Notification'
     notes: ''
     status: true
     conditions: {  }
-    weight: 0
+    weight: -49
     settings:
       states:
         - completed
-      to_mail: kaspar.lengacher@cevisteffisburg.ch
+      to_mail: _default
       to_options: {  }
       bcc_mail: ''
       bcc_options: {  }
       cc_mail: ''
       cc_options: {  }
-      from_mail: _default
+      from_mail: '[webform_submission:values:email:raw]'
       from_options: {  }
-      from_name: _default
+      from_name: '[webform_submission:values:first_name] [webform_submission:values:last_name]'
       reply_to: ''
       return_path: ''
       sender_mail: ''
       sender_name: ''
-      subject: 'Cevi; Eintrag Kontaktformular'
+      subject: _default
       body: _default
       excluded_elements: {  }
       ignore_access: false
@@ -262,4 +277,90 @@ handlers:
       theme_name: ''
       parameters: {  }
       debug: false
+  email_reminder:
+    id: scheduled_email
+    handler_id: email_reminder
+    label: 'Email Reminder'
+    notes: ''
+    status: true
+    conditions: {  }
+    weight: -48
+    settings:
+      send: '[webform_submission:node:field_webform_demo_event_date:value]'
+      days: -1
+      ignore_past: false
+      unschedule: false
+      test_send: false
+      states:
+        - completed
+      to_mail: _default
+      to_options: {  }
+      bcc_mail: ''
+      bcc_options: {  }
+      cc_mail: ''
+      cc_options: {  }
+      from_mail: _default
+      from_options: {  }
+      from_name: _default
+      reply_to: ''
+      return_path: ''
+      sender_mail: ''
+      sender_name: ''
+      subject: '[webform_submission:node:title:value]: Reminder'
+      body: _default
+      excluded_elements: {  }
+      ignore_access: false
+      exclude_empty: true
+      exclude_empty_checkbox: false
+      exclude_attachments: false
+      html: true
+      attachments: false
+      twig: false
+      theme_name: ''
+      parameters: {  }
+      debug: false
+  submission_limit:
+    id: settings
+    handler_id: submission_limit
+    label: 'Submission limit'
+    notes: ''
+    status: true
+    conditions: {  }
+    weight: -50
+    settings:
+      debug: false
+      preview_title: ''
+      preview_message: ''
+      confirmation_url: ''
+      confirmation_title: ''
+      confirmation_message: ''
+      entity_limit_total: '[webform_submission:node:field_webform_entity_limit_total]'
+  teeshirt_options_limits:
+    id: options_limit
+    handler_id: teeshirt_options_limits
+    label: 'Tee shirt limits'
+    notes: ''
+    status: true
+    conditions: {  }
+    weight: 0
+    settings:
+      element_key: teeshirt
+      limit: null
+      limits:
+        XS: 2
+        S: 4
+        M: 6
+        L: 8
+        XL: 6
+      limit_reached_message: 'No more tee shirts are available.'
+      limit_source_entity: true
+      limit_user: false
+      option_none_action: disable
+      option_message_display: label
+      option_multiple_message: '[@remaining shirts remaining]'
+      option_single_message: '[@remaining shirt remaining]'
+      option_none_message: ''
+      option_unlimited_message: '[Unlimited]'
+      option_error_message: 'Tee shirts in @label are no longer available.'
+      tableselect_header: ''
 variants: {  }

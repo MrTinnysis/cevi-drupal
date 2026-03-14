@@ -1,4 +1,4 @@
-uuid: a1e10a2c-2d01-421a-8b0e-4ecb2550f5b4
+uuid: 62399c6b-299a-4168-9ac2-6692a622d678
 langcode: de
 status: open
 dependencies:
@@ -11,11 +11,11 @@ third_party_settings:
 weight: 0
 open: null
 close: null
-uid: 1
+uid: 19
 template: false
 archive: false
-id: contact_form
-title: Kontaktformular
+id: support_formular
+title: Support-formular
 description: ''
 categories: {  }
 elements: |-
@@ -34,9 +34,9 @@ elements: |-
     '#title': Nachricht
     '#required': true
     '#required_error': 'Eine Anfrage ohne Inhalt? Nee. Bitte ausfüllen!'
-  captcha_02:
+  captcha:
     '#type': captcha
-    '#captcha_type': recaptcha/reCAPTCHA
+    '#captcha_type': image_captcha/Image
   actions:
     '#type': webform_actions
     '#title': 'Submit button(s)'
@@ -236,11 +236,11 @@ handlers:
     settings:
       states:
         - completed
-      to_mail: kaspar.lengacher@cevisteffisburg.ch
+      to_mail: informatik@cevisteffisburg.ch
       to_options: {  }
       bcc_mail: ''
       bcc_options: {  }
-      cc_mail: ''
+      cc_mail: 'fidelo@cevisteffisburg.ch, zulu@cevisteffisburg.ch, ajax@cevisteffisburg.ch'
       cc_options: {  }
       from_mail: _default
       from_options: {  }

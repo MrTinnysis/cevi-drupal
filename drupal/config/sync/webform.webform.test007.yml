@@ -1,4 +1,4 @@
-uuid: a1e10a2c-2d01-421a-8b0e-4ecb2550f5b4
+uuid: c4c731ec-1caf-4341-9794-74af984554fb
 langcode: de
 status: open
 dependencies:
@@ -11,36 +11,36 @@ third_party_settings:
 weight: 0
 open: null
 close: null
-uid: 1
+uid: 7
 template: false
 archive: false
-id: contact_form
-title: Kontaktformular
+id: test007
+title: Test
 description: ''
 categories: {  }
 elements: |-
-  name:
-    '#type': textfield
-    '#title': Name
-    '#required': true
-  email:
-    '#type': email
-    '#title': E-Mail
-    '#autocomplete': 'off'
-    '#required': true
-    '#required_error': 'Auf deine Anfrage möchten wir dir eine Antwort zukommen lassen können. Bitte gib eine E-Mailadresse an.'
-  message:
-    '#type': textarea
-    '#title': Nachricht
-    '#required': true
-    '#required_error': 'Eine Anfrage ohne Inhalt? Nee. Bitte ausfüllen!'
-  captcha_02:
-    '#type': captcha
-    '#captcha_type': recaptcha/reCAPTCHA
-  actions:
-    '#type': webform_actions
-    '#title': 'Submit button(s)'
-    '#submit__label': Abschicken
+  alter1:
+    '#type': webform_tableselect_sort
+    '#title': Bemerkungen
+    '#options':
+      'T-shirt Cevianer': 'T-shirt Cevianer'
+      'T-shirt Cevianerin': 'T-shirt Cevianerin'
+  alter2:
+    '#type': webform_image_select
+    '#title': Bemerkungenrandom
+    '#multiple': 3
+    '#sort_options': true
+    '#images':
+      1:
+        text: haj
+        src: ''
+      2:
+        text: hoj
+        src: ''
+      3:
+        text: huj
+        src: ''
+    '#show_label': true
 css: ''
 javascript: ''
 settings:
@@ -145,10 +145,10 @@ settings:
   draft_loaded_message: ''
   draft_pending_single_message: ''
   draft_pending_multiple_message: ''
-  confirmation_type: inline
+  confirmation_type: page
   confirmation_url: ''
   confirmation_title: ''
-  confirmation_message: "<strong>Danke f&uuml;r deine Nachricht!</strong><br />\r\n<br />\r\nWir werden uns in den n&auml;chsten Tagen bei dir melden."
+  confirmation_message: ''
   confirmation_attributes: {  }
   confirmation_back: true
   confirmation_back_label: ''
@@ -224,42 +224,5 @@ access:
     roles: {  }
     users: {  }
     permissions: {  }
-handlers:
-  e_mail:
-    id: email
-    handler_id: e_mail
-    label: E-Mail
-    notes: ''
-    status: true
-    conditions: {  }
-    weight: 0
-    settings:
-      states:
-        - completed
-      to_mail: kaspar.lengacher@cevisteffisburg.ch
-      to_options: {  }
-      bcc_mail: ''
-      bcc_options: {  }
-      cc_mail: ''
-      cc_options: {  }
-      from_mail: _default
-      from_options: {  }
-      from_name: _default
-      reply_to: ''
-      return_path: ''
-      sender_mail: ''
-      sender_name: ''
-      subject: 'Cevi; Eintrag Kontaktformular'
-      body: _default
-      excluded_elements: {  }
-      ignore_access: false
-      exclude_empty: true
-      exclude_empty_checkbox: false
-      exclude_attachments: false
-      html: true
-      attachments: false
-      twig: false
-      theme_name: ''
-      parameters: {  }
-      debug: false
+handlers: {  }
 variants: {  }

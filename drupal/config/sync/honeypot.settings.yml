@@ -8,12 +8,13 @@ unprotected_forms:
   - views_exposed_form
   - honeypot_settings_form
 log: true
-element_name: url
+element_name: link
 time_limit: 5
 expire: 300
 form_settings:
   user_register_form: true
   user_pass: true
+  node_creator_content_form: true
   node_defaultpage_form: true
   node_landingpage_form: true
   comment_comment_form: true

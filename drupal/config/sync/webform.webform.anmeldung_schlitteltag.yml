@@ -1,4 +1,4 @@
-uuid: a1e10a2c-2d01-421a-8b0e-4ecb2550f5b4
+uuid: 67b7f58a-bc9b-4928-8387-631de8be1671
 langcode: de
 status: open
 dependencies:
@@ -11,32 +11,40 @@ third_party_settings:
 weight: 0
 open: null
 close: null
-uid: 1
+uid: 20
 template: false
 archive: false
-id: contact_form
-title: Kontaktformular
+id: anmeldung_schlitteltag
+title: 'Anmeldung Schlitteltag'
 description: ''
 categories: {  }
 elements: |-
-  name:
+  vorname:
     '#type': textfield
-    '#title': Name
+    '#title': Vorname
     '#required': true
-  email:
+  nachname:
+    '#type': textfield
+    '#title': Nachname
+    '#required': true
+  jungscharname:
+    '#type': textfield
+    '#title': Jungscharname
+  telefon_nummer_eltern:
+    '#type': textfield
+    '#title': 'Telefon Nummer Eltern'
+    '#required': true
+  allergien:
+    '#type': textarea
+    '#title': Allergien
+  e_mail:
     '#type': email
     '#title': E-Mail
-    '#autocomplete': 'off'
     '#required': true
-    '#required_error': 'Auf deine Anfrage möchten wir dir eine Antwort zukommen lassen können. Bitte gib eine E-Mailadresse an.'
-  message:
-    '#type': textarea
-    '#title': Nachricht
-    '#required': true
-    '#required_error': 'Eine Anfrage ohne Inhalt? Nee. Bitte ausfüllen!'
-  captcha_02:
+  captcha:
     '#type': captcha
-    '#captcha_type': recaptcha/reCAPTCHA
+    '#captcha_type': captcha/Math
+    '#captcha_title': 7+8
   actions:
     '#type': webform_actions
     '#title': 'Submit button(s)'
@@ -145,10 +153,10 @@ settings:
   draft_loaded_message: ''
   draft_pending_single_message: ''
   draft_pending_multiple_message: ''
-  confirmation_type: inline
+  confirmation_type: modal
   confirmation_url: ''
-  confirmation_title: ''
-  confirmation_message: "<strong>Danke f&uuml;r deine Nachricht!</strong><br />\r\n<br />\r\nWir werden uns in den n&auml;chsten Tagen bei dir melden."
+  confirmation_title: Bestätigung
+  confirmation_message: 'Vielen Dank f&uuml;r deine Anmeldung!'
   confirmation_attributes: {  }
   confirmation_back: true
   confirmation_back_label: ''
@@ -224,42 +232,5 @@ access:
     roles: {  }
     users: {  }
     permissions: {  }
-handlers:
-  e_mail:
-    id: email
-    handler_id: e_mail
-    label: E-Mail
-    notes: ''
-    status: true
-    conditions: {  }
-    weight: 0
-    settings:
-      states:
-        - completed
-      to_mail: kaspar.lengacher@cevisteffisburg.ch
-      to_options: {  }
-      bcc_mail: ''
-      bcc_options: {  }
-      cc_mail: ''
-      cc_options: {  }
-      from_mail: _default
-      from_options: {  }
-      from_name: _default
-      reply_to: ''
-      return_path: ''
-      sender_mail: ''
-      sender_name: ''
-      subject: 'Cevi; Eintrag Kontaktformular'
-      body: _default
-      excluded_elements: {  }
-      ignore_access: false
-      exclude_empty: true
-      exclude_empty_checkbox: false
-      exclude_attachments: false
-      html: true
-      attachments: false
-      twig: false
-      theme_name: ''
-      parameters: {  }
-      debug: false
+handlers: {  }
 variants: {  }

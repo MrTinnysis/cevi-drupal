@@ -1,0 +1,30 @@
+uuid: ead5258c-8a12-49e3-b639-13b3c1ec3c5b
+langcode: de
+status: true
+dependencies:
+  module:
+    - file
+    - image
+    - paragraphs
+id: paragraph.field_bild_hoch
+field_name: field_bild_hoch
+entity_type: paragraph
+type: image
+settings:
+  default_image:
+    uuid: null
+    alt: ''
+    title: ''
+    width: null
+    height: null
+  target_type: file
+  display_field: false
+  display_default: false
+  uri_scheme: public
+module: image
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

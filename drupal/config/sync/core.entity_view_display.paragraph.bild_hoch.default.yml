@@ -1,0 +1,25 @@
+uuid: 893f1e3c-8e1c-4531-b914-092a4da111cd
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.bild_hoch.field_bild_hoch
+    - image.style.medium
+    - paragraphs.paragraphs_type.bild_hoch
+  module:
+    - image
+id: paragraph.bild_hoch.default
+targetEntityType: paragraph
+bundle: bild_hoch
+mode: default
+content:
+  field_bild_hoch:
+    weight: 0
+    label: hidden
+    settings:
+      image_style: medium
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+hidden: {  }

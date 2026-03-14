@@ -255,4 +255,40 @@ echo "Removed orphaned module config entries\n";
 $pdo->exec("DELETE FROM key_value WHERE collection='entity.definitions.bundle_field_map'");
 echo "Cleared entity bundle field map cache\n";
 
+// -------------------------------------------------------------------------
+// 12. Replace hardcoded internal domain links with relative paths
+//     cevisteffisburg.ch/... and cevistb.uber.space/... become /...
+//     Dead uber.space /sites/default/files/ image refs are removed
+//     (assets no longer exist there; DB may use Unicode curly quotes).
+// -------------------------------------------------------------------------
+$link_tables = [
+    ['paragraph__field_text',          'field_text_value'],
+    ['paragraph_revision__field_text', 'field_text_value'],
+    ['node__body',                     'body_value'],
+    ['node_revision__body',            'body_value'],
+    ['block_content__body',            'body_value'],
+    ['block_content_revision__body',   'body_value'],
+];
+foreach ($link_tables as [$table, $col]) {
+    if (!$pdo->query("SHOW TABLES LIKE '$table'")->fetchColumn()) continue;
+    // https://cevisteffisburg.ch/... and https://www.cevisteffisburg.ch/... -> /...
+    $pdo->exec("UPDATE `$table` SET `$col` = REGEXP_REPLACE(`$col`,
+        'https?://(www[.])?cevisteffisburg[.]ch/',
+        '/') WHERE `$col` REGEXP 'https?://(www[.])?cevisteffisburg[.]ch/'");
+    // bare www.cevisteffisburg.ch/... (no protocol) -> relative
+    $pdo->exec("UPDATE `$table` SET `$col` = REGEXP_REPLACE(`$col`,
+        'www[.]cevisteffisburg[.]ch/',
+        '/') WHERE `$col` LIKE '%www.cevisteffisburg.ch/%'");
+    // cevistb.uber.space/PATH (non-file links) -> /PATH
+    $pdo->exec("UPDATE `$table` SET `$col` = REGEXP_REPLACE(`$col`,
+        'https?://cevistb[.]uber[.]space(/(?!sites/default/files)[^ \"<>]*)',
+        '\\\\1') WHERE `$col` REGEXP 'https?://cevistb[.]uber[.]space/(?!sites/default/files)'");
+    // Remove whole <p> containing dead uber.space /sites/default/files/ URLs
+    $pdo->exec("UPDATE `$table` SET `$col` = REGEXP_REPLACE(`$col`,
+        '<p>[^<]*cevistb[.]uber[.]space/sites/default/files/[^<]*</p>[\\n]?',
+        '') WHERE `$col` LIKE '%cevistb.uber.space/sites/default/files/%'");
+    echo "Replaced domain links in $table\n";
+}
+echo "Hardcoded internal domain links replaced with relative paths\n";
+
 echo "\nDone. You can now start the drupal container.\n";

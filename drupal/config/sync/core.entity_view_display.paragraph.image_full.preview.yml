@@ -1,23 +1,23 @@
-uuid: c1815c9e-accd-45da-a881-4e58a0f7a425
+uuid: d6c3c63e-da4c-4a9c-9d8f-7f3932937173
 langcode: de
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.paragraph.preview
     - field.field.paragraph.image_full.field_image_full
     - image.style.background_desktop
     - paragraphs.paragraphs_type.image_full
   module:
     - layout_builder
-    - layout_discovery
     - media
 third_party_settings:
   layout_builder:
     allow_custom: false
     enabled: false
-id: paragraph.image_full.default
+id: paragraph.image_full.preview
 targetEntityType: paragraph
 bundle: image_full
-mode: default
+mode: preview
 content:
   field_image_full:
     type: media_thumbnail

@@ -8,17 +8,93 @@ third_party_settings:
   type_style:
     color: '#000000'
     icon: ''
+weight: 0
 open: null
 close: null
-weight: 0
 uid: 1
 template: false
 archive: false
 id: cevi_anmeldung
-title: Cevi-Anmeldung
+title: Schnupper-Anmeldung
 description: ''
-category: ''
-elements: "vorname_name_eltern:\n  '#type': textfield\n  '#title': 'Vorname / Name Eltern'\n  '#required': true\nemail:\n  '#type': email\n  '#title': Email\n  '#required': true\nphone:\n  '#type': tel\n  '#title': 'Telefonnummer / Handy'\n  '#required': true\nstrasse:\n  '#type': textfield\n  '#title': Strasse\n  '#required': true\nplz_ort:\n  '#type': textfield\n  '#title': 'PLZ / Ort'\n  '#required': true\nhorizontal_rule:\n  '#type': webform_horizontal_rule\nname_kind:\n  '#type': textfield\n  '#title': 'Name Kind'\n  '#required': true\nklasse:\n  '#type': textfield\n  '#title': Klasse\ngeburtsdatum_kind:\n  '#type': date\n  '#title': Geburtsdatum\n  '#required': true\n  '#date_date_format': d.m.Y\n  '#date_date_max': today\ngeschlecht_kind:\n  '#type': select\n  '#title': Geschlecht\n  '#options':\n    Weiblich: Weiblich\n    Männlich: Männlich\n  '#required': true\nhorizontal_rule_01:\n  '#type': webform_horizontal_rule\nbemerkungen:\n  '#type': textarea\n  '#title': Bemerkungen\ncaptcha:\n  '#type': captcha\n  '#captcha_type': recaptcha/reCAPTCHA\nactions:\n  '#type': webform_actions\n  '#title': 'Anmeldung abschicken'"
+categories: {  }
+elements: |-
+  name_kind:
+    '#type': textfield
+    '#title': 'Name Kind'
+    '#required': true
+  vorname_name_eltern:
+    '#type': textfield
+    '#title': 'Vorname '
+    '#required': true
+  email:
+    '#type': email
+    '#title': Email
+    '#required': true
+  phone:
+    '#type': tel
+    '#title': 'Telefonnummer / Handy'
+    '#minlength': 12
+    '#maxlength': 12
+    '#placeholder': '+41791112233'
+    '#required': true
+  strasse:
+    '#type': textfield
+    '#title': Strasse
+    '#required': true
+  plz_ort:
+    '#type': textfield
+    '#title': Ort
+    '#placeholder': Steffisburg
+    '#required': true
+  plz:
+    '#type': textfield
+    '#title': PLZ
+    '#minlength': 4
+    '#maxlength': 4
+    '#placeholder': '3612'
+    '#required': true
+  geburtsdatum_kind:
+    '#type': date
+    '#title': Geburtsdatum
+    '#required': true
+    '#date_date_format': d.m.Y
+    '#date_date_max': today
+  alter1:
+    '#type': select
+    '#title': Klasse
+    '#options':
+      '1. KG': '1. KG'
+      '2. KG': '2. KG'
+      '1. Klasse': '1. Klasse'
+      '2. Klasse': '2. Klasse'
+      '3. Klasse': '3. Klasse'
+      '4. Klasse': '4. Klasse'
+      '5. Klasse': '5. Klasse'
+      '6. Klasse': '6. Klasse'
+      '7. Klasse': '7. Klasse'
+    '#required': true
+  horizontal_rule_01:
+    '#type': webform_horizontal_rule
+  bemerkungen:
+    '#type': textarea
+    '#title': Bemerkungen
+  bilder_sagen_mehr_als_tausend_worte:
+    '#type': checkbox
+    '#title': Bildrecht
+    '#description': |
+      <br />
+      Bilder sagen mehr als Worte. Um die digitalen Auftritte wie Webseiten sowie alle Printprodukte mit Bildern zu gestalten, ben&ouml;tigen wir das Einverst&auml;ndnis f&uuml;r deren Verwendung und Ver&ouml;ffentlichtung in s&auml;mtlichen Kommunikationsmitteln des Cevi Steffisburg sowie der Reformierten Kirchgemeinde Steffisburg.&nbsp;
+      
+    '#title_display': before
+    '#description_display': before
+    '#required': true
+  captcha_01:
+    '#type': captcha
+    '#captcha_type': recaptcha/reCAPTCHA
+  actions:
+    '#type': webform_actions
+    '#title': 'Anmeldung abschicken'
 css: ''
 javascript: ''
 settings:
@@ -33,40 +109,48 @@ settings:
   page_theme_name: ''
   form_title: both
   form_submit_once: false
-  form_exception_message: ''
   form_open_message: ''
   form_close_message: ''
+  form_exception_message: ''
   form_previous_submissions: true
   form_confidential: false
   form_confidential_message: ''
-  form_remote_addr: true
+  form_disable_remote_addr: false
   form_convert_anonymous: false
   form_prepopulate: false
   form_prepopulate_source_entity: false
   form_prepopulate_source_entity_required: false
   form_prepopulate_source_entity_type: ''
-  form_reset: false
+  form_unsaved: false
+  form_disable_back: false
+  form_submit_back: false
   form_disable_autocomplete: false
   form_novalidate: false
   form_disable_inline_errors: false
   form_required: false
-  form_unsaved: false
-  form_disable_back: false
-  form_submit_back: false
   form_autofocus: false
   form_details_toggle: false
+  form_reset: false
   form_access_denied: default
   form_access_denied_title: ''
   form_access_denied_message: ''
   form_access_denied_attributes: {  }
   form_file_limit: ''
+  form_attributes: {  }
+  form_method: ''
+  form_action: ''
   share: false
   share_node: false
   share_theme_name: ''
   share_title: true
   share_page_body_attributes: {  }
   submission_label: ''
+  submission_exception_message: ''
+  submission_locked_message: ''
   submission_log: false
+  submission_excluded_elements: {  }
+  submission_exclude_empty: false
+  submission_exclude_empty_checkbox: false
   submission_views: {  }
   submission_views_replace: {  }
   submission_user_columns: {  }
@@ -75,11 +159,6 @@ settings:
   submission_access_denied_title: ''
   submission_access_denied_message: ''
   submission_access_denied_attributes: {  }
-  submission_exception_message: ''
-  submission_locked_message: ''
-  submission_excluded_elements: {  }
-  submission_exclude_empty: false
-  submission_exclude_empty_checkbox: false
   previous_submission_message: ''
   previous_submissions_message: ''
   autofill: false
@@ -90,19 +169,21 @@ settings:
   wizard_progress_percentage: false
   wizard_progress_link: false
   wizard_progress_states: false
-  wizard_auto_forward: true
-  wizard_auto_forward_hide_next_button: false
-  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
   wizard_confirmation_label: ''
+  wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_track: ''
   wizard_prev_button_label: ''
   wizard_next_button_label: ''
   wizard_toggle: false
   wizard_toggle_show_label: ''
   wizard_toggle_hide_label: ''
+  wizard_page_type: container
+  wizard_page_title_tag: h2
   preview: 0
   preview_label: ''
   preview_title: ''
@@ -119,9 +200,9 @@ settings:
   draft_pending_single_message: ''
   draft_pending_multiple_message: ''
   confirmation_type: inline
-  confirmation_title: ''
-  confirmation_message: "<strong>Danke!</strong><br />\r\n<br />\r\nWir haben deine Anmeldung erhalten und melden uns in den n&auml;chsten Tagen bei euch."
   confirmation_url: ''
+  confirmation_title: ''
+  confirmation_message: "<strong>Sch&ouml;n bist du dabei!</strong><br />\r\n<br />\r\nWir haben deine Anmeldung erhalten und freuen uns auf dich!"
   confirmation_attributes: {  }
   confirmation_back: true
   confirmation_back_label: ''
@@ -200,24 +281,28 @@ access:
 handlers:
   e_mail:
     id: email
+    handler_id: e_mail
     label: E-Mail
     notes: ''
-    handler_id: e_mail
     status: true
     conditions: {  }
     weight: 0
     settings:
       states:
         - completed
-      to_mail: _default
+      to_mail: al@cevisteffisburg.ch
       to_options: {  }
-      cc_mail: ''
-      cc_options: {  }
       bcc_mail: ''
       bcc_options: {  }
+      cc_mail: ''
+      cc_options: {  }
       from_mail: _default
       from_options: {  }
       from_name: _default
+      reply_to: ''
+      return_path: ''
+      sender_mail: ''
+      sender_name: ''
       subject: _default
       body: _default
       excluded_elements: {  }
@@ -228,11 +313,7 @@ handlers:
       html: true
       attachments: false
       twig: false
-      debug: false
-      reply_to: ''
-      return_path: ''
-      sender_mail: ''
-      sender_name: ''
       theme_name: ''
       parameters: {  }
+      debug: false
 variants: {  }

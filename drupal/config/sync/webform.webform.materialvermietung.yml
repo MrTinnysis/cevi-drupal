@@ -1,4 +1,4 @@
-uuid: a1e10a2c-2d01-421a-8b0e-4ecb2550f5b4
+uuid: af281fd6-d9bb-433c-8549-5d89eb3b2986
 langcode: de
 status: open
 dependencies:
@@ -6,37 +6,51 @@ dependencies:
     - type_style
 third_party_settings:
   type_style:
-    color: '#000000'
+    color: '#fb0909'
     icon: ''
 weight: 0
 open: null
 close: null
-uid: 1
+uid: 7
 template: false
 archive: false
-id: contact_form
-title: Kontaktformular
+id: materialvermietung
+title: Materialvermietung
 description: ''
 categories: {  }
 elements: |-
   name:
-    '#type': textfield
+    '#type': webform_name
     '#title': Name
-    '#required': true
-  email:
+    '#title__access': false
+    '#first__title': Vorname
+    '#first__required': true
+    '#middle__access': false
+    '#last__title': Name
+    '#last__required': true
+    '#suffix__access': false
+    '#degree__access': false
+  adresse:
+    '#type': webform_address
+    '#title': Adresse
+    '#address__title': Adresse
+    '#address_2__access': false
+    '#city__title': Ort
+    '#state_province__access': false
+    '#postal_code__title': PLZ
+    '#country__access': false
+  e_mail:
     '#type': email
     '#title': E-Mail
-    '#autocomplete': 'off'
-    '#required': true
-    '#required_error': 'Auf deine Anfrage möchten wir dir eine Antwort zukommen lassen können. Bitte gib eine E-Mailadresse an.'
-  message:
-    '#type': textarea
-    '#title': Nachricht
-    '#required': true
-    '#required_error': 'Eine Anfrage ohne Inhalt? Nee. Bitte ausfüllen!'
-  captcha_02:
+  bemerkungen:
+    '#type': text_format
+    '#title': Mietanfrage
+    '#allowed_formats':
+      plain_text: plain_text
+    '#hide_help': true
+  captcha:
     '#type': captcha
-    '#captcha_type': recaptcha/reCAPTCHA
+    '#captcha_type': image_captcha/Image
   actions:
     '#type': webform_actions
     '#title': 'Submit button(s)'
@@ -145,10 +159,10 @@ settings:
   draft_loaded_message: ''
   draft_pending_single_message: ''
   draft_pending_multiple_message: ''
-  confirmation_type: inline
+  confirmation_type: page
   confirmation_url: ''
-  confirmation_title: ''
-  confirmation_message: "<strong>Danke f&uuml;r deine Nachricht!</strong><br />\r\n<br />\r\nWir werden uns in den n&auml;chsten Tagen bei dir melden."
+  confirmation_title: 'Anfrage abgeschickt'
+  confirmation_message: 'Vielen Dank f&uuml;r dein Interesse an unserem Material. Du erh&auml;lst von uns in ein paar Tagen eine Antwort auf deine Anfrage.'
   confirmation_attributes: {  }
   confirmation_back: true
   confirmation_back_label: ''
@@ -236,7 +250,7 @@ handlers:
     settings:
       states:
         - completed
-      to_mail: kaspar.lengacher@cevisteffisburg.ch
+      to_mail: joel.vongunten@cevisteffisburg.ch
       to_options: {  }
       bcc_mail: ''
       bcc_options: {  }
@@ -249,11 +263,11 @@ handlers:
       return_path: ''
       sender_mail: ''
       sender_name: ''
-      subject: 'Cevi; Eintrag Kontaktformular'
+      subject: 'Cevi; Anfrage Materialmiete'
       body: _default
       excluded_elements: {  }
       ignore_access: false
-      exclude_empty: true
+      exclude_empty: false
       exclude_empty_checkbox: false
       exclude_attachments: false
       html: true

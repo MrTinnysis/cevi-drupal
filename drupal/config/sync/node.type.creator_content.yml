@@ -1,0 +1,22 @@
+uuid: 5fc3a8b6-07d3-4b7b-ae2c-a0db683aa859
+langcode: de
+status: true
+dependencies:
+  module:
+    - menu_ui
+    - type_style
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - account
+    parent: 'account:'
+  type_style:
+    color: '#000000'
+    icon: ''
+name: 'Creator Content'
+type: creator_content
+description: 'Nur sichtbar für wichtige.'
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: true

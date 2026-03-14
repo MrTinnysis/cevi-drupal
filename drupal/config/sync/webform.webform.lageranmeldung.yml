@@ -1,4 +1,4 @@
-uuid: a1e10a2c-2d01-421a-8b0e-4ecb2550f5b4
+uuid: 1be077f9-360e-4f60-817a-dc5773defff2
 langcode: de
 status: open
 dependencies:
@@ -11,36 +11,103 @@ third_party_settings:
 weight: 0
 open: null
 close: null
-uid: 1
+uid: 7
 template: false
 archive: false
-id: contact_form
-title: Kontaktformular
+id: lageranmeldung
+title: 'Stufenweekend Anmeldung'
 description: ''
 categories: {  }
 elements: |-
+  name_kind:
+    '#type': textfield
+    '#title': Ceviname
+  vorname_name_eltern:
+    '#type': textfield
+    '#title': Vorname
+    '#required': true
   name:
     '#type': textfield
     '#title': Name
     '#required': true
   email:
     '#type': email
-    '#title': E-Mail
-    '#autocomplete': 'off'
+    '#title': Email
     '#required': true
-    '#required_error': 'Auf deine Anfrage möchten wir dir eine Antwort zukommen lassen können. Bitte gib eine E-Mailadresse an.'
-  message:
+  phone:
+    '#type': tel
+    '#title': 'Telefonnummer / Handy'
+    '#required': true
+  strasse:
+    '#type': textfield
+    '#title': Strasse
+    '#required': true
+  plz_ort:
+    '#type': textfield
+    '#title': 'PLZ / Ort'
+    '#required': true
+  geburtsdatum_kind:
+    '#type': date
+    '#title': Geburtsdatum
+    '#required': true
+    '#date_date_format': d.m.Y
+    '#date_date_max': today
+  horizontal_rule_01:
+    '#type': webform_horizontal_rule
+  weitere_informationen:
+    '#type': label
+    '#title': 'Weitere Informationen'
+  ga:
+    '#type': checkbox
+    '#title': GA
+    '#title_display': before
+    '#description_display': before
+  vegi:
+    '#type': checkbox
+    '#title': Vegi
+    '#title_display': before
+    '#description_display': before
+  laktosefrei:
+    '#type': checkbox
+    '#title': Laktosefrei
+    '#title_display': before
+    '#description_display': before
+  glutenfrei:
+    '#type': checkbox
+    '#title': Glutenfrei
+    '#title_display': before
+    '#description_display': before
+  keine_aepfel:
+    '#type': checkbox
+    '#title': 'Keine Äpfel'
+    '#title_display': before
+    '#description_display': before
+  anderes_bitte_bei_bemerkungen_angeben_:
+    '#type': checkbox
+    '#title': 'Anderes (bitte bei Bemerkungen angeben)'
+    '#title_display': before
+    '#description_display': before
+  bemerkungen:
     '#type': textarea
-    '#title': Nachricht
+    '#title': Bemerkungen
+  horizontal_rule_02:
+    '#type': webform_horizontal_rule
+  bilder_sagen_mehr_als_tausend_worte:
+    '#type': checkbox
+    '#title': Bildrecht
+    '#description': |
+      <br />
+      Bilder sagen mehr als Worte. Um die digitalen Auftritte wie Webseiten sowie alle Printprodukte mit Bildern zu gestalten, ben&ouml;tigen wir das Einverst&auml;ndnis f&uuml;r deren Verwendung und Ver&ouml;ffentlichung in s&auml;mtlichen Kommunikationsmitteln der Reformierten Kirchgemeinde Steffisburg sowie dem Cevi. Wenn sie damit nicht einverstanden sind, melden sie sich bitte &uuml;ber das <a href="/form/contact-form">Kontaktformular</a>.
+      
+    '#title_display': before
+    '#description_display': before
     '#required': true
-    '#required_error': 'Eine Anfrage ohne Inhalt? Nee. Bitte ausfüllen!'
-  captcha_02:
+  captcha_01:
     '#type': captcha
     '#captcha_type': recaptcha/reCAPTCHA
   actions:
     '#type': webform_actions
-    '#title': 'Submit button(s)'
-    '#submit__label': Abschicken
+    '#title': 'Anmeldung abschicken'
 css: ''
 javascript: ''
 settings:
@@ -148,7 +215,7 @@ settings:
   confirmation_type: inline
   confirmation_url: ''
   confirmation_title: ''
-  confirmation_message: "<strong>Danke f&uuml;r deine Nachricht!</strong><br />\r\n<br />\r\nWir werden uns in den n&auml;chsten Tagen bei dir melden."
+  confirmation_message: "<strong>Sch&ouml;n bist du dabei!</strong><br />\r\n<br />\r\nWir haben deine Anmeldung erhalten und freuen uns auf dich!"
   confirmation_attributes: {  }
   confirmation_back: true
   confirmation_back_label: ''
@@ -236,7 +303,44 @@ handlers:
     settings:
       states:
         - completed
-      to_mail: kaspar.lengacher@cevisteffisburg.ch
+      to_mail: suraya@cevisteffisburg.ch
+      to_options: {  }
+      bcc_mail: ''
+      bcc_options: {  }
+      cc_mail: 'joel.vongunten@cevisteffisburg.ch, kaspar.lengacher@cevisteffisburg.ch'
+      cc_options: {  }
+      from_mail: _default
+      from_options: {  }
+      from_name: _default
+      reply_to: ''
+      return_path: ''
+      sender_mail: ''
+      sender_name: ''
+      subject: _default
+      body: _default
+      excluded_elements: {  }
+      ignore_access: false
+      exclude_empty: true
+      exclude_empty_checkbox: false
+      exclude_attachments: false
+      html: true
+      attachments: false
+      twig: false
+      theme_name: ''
+      parameters: {  }
+      debug: false
+  bestaetigungs_e_mail:
+    id: email
+    handler_id: bestaetigungs_e_mail
+    label: 'Bestätigungs E-Mail'
+    notes: ''
+    status: true
+    conditions: {  }
+    weight: 0
+    settings:
+      states:
+        - completed
+      to_mail: '[webform_submission:values:email:raw]'
       to_options: {  }
       bcc_mail: ''
       bcc_options: {  }
@@ -249,17 +353,17 @@ handlers:
       return_path: ''
       sender_mail: ''
       sender_name: ''
-      subject: 'Cevi; Eintrag Kontaktformular'
+      subject: _default
       body: _default
       excluded_elements: {  }
       ignore_access: false
       exclude_empty: true
-      exclude_empty_checkbox: false
+      exclude_empty_checkbox: true
       exclude_attachments: false
       html: true
       attachments: false
       twig: false
-      theme_name: ''
+      theme_name: cevi
       parameters: {  }
       debug: false
 variants: {  }
