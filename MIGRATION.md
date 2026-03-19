@@ -98,6 +98,16 @@ After `drush cim` they should be gone. If any remain, re-run `drush cim -y` or u
 Email addresses (`@cevisteffisburg.ch`) in webform handlers are intentional — they are
 the real recipient addresses and should remain.
 
+### Remove temporary .bak files from the live server
+
+During the emergency salt rotation a `.bak` copy was left next to each `settings.php`
+on the Hoststar server. Remove them once the migration to the new stack is complete:
+
+```bash
+rm web/cevisteffisburg.ch/public_html/cevi-drupal/drupal/web/sites/default/settings.php.bak
+rm web/cevisteffisburg.ch/public_html/cevi-drupal/settings/settings.php.bak
+```
+
 ## 8. Verify
 
 ```bash
