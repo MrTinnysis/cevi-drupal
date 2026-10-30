@@ -53,12 +53,13 @@ COPY drupal/config ./drupal/config
 # =============================================================================
 # Stage 3: Production PHP-FPM image
 # =============================================================================
-FROM php:8.3-fpm-alpine AS production
+FROM php:8.4-fpm-alpine AS production
 
 # Install build dependencies, compile PHP extensions, then remove build tools
 RUN apk add --no-cache \
     freetype \
     icu-libs \
+    libavif \
     libjpeg-turbo \
     libpng \
     libwebp \
@@ -69,6 +70,7 @@ RUN apk add --no-cache \
         freetype-dev \
         g++ \
         icu-dev \
+        libavif-dev \
         libjpeg-turbo-dev \
         libpng-dev \
         libwebp-dev \
@@ -78,6 +80,7 @@ RUN apk add --no-cache \
         --with-freetype \
         --with-jpeg \
         --with-webp \
+        --with-avif \
     && docker-php-ext-install -j$(nproc) \
         gd \
         intl \

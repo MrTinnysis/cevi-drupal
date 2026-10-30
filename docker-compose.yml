@@ -6,6 +6,13 @@ services:
   mariadb:
     image: mariadb:11
     restart: unless-stopped
+    command:
+      # Drupal recommends READ COMMITTED over InnoDB's REPEATABLE-READ
+      # default. Requires every table to have a primary key (true for all
+      # core/contrib tables as of this migration -- honeypot_user needed a
+      # surrogate PK added manually, see MIGRATION.md).
+      - --transaction-isolation=READ-COMMITTED
+      - --binlog-format=ROW
     environment:
       MYSQL_DATABASE: ${DRUPAL_DB_NAME}
       MYSQL_USER: ${DRUPAL_DB_USER}

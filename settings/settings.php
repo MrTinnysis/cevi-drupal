@@ -781,6 +781,17 @@ $settings['entity_update_backup'] = TRUE;
 $settings['migrate_node_migrate_type_classic'] = FALSE;
 
 /**
+ * HTML5 form validation.
+ *
+ * Explicitly set (rather than relying on the current implicit default of
+ * TRUE) since Drupal 12 will default this to FALSE, which disables native
+ * HTML5 validation on all forms. Revisit before upgrading to Drupal 12 --
+ * test with FALSE in a staging environment first.
+ * @see https://www.drupal.org/node/3537128
+ */
+$settings['enable_html5_validation'] = TRUE;
+
+/**
  * Load local development override configuration, if available.
  *
  * Create a settings.local.php file to override variables on secondary (staging,

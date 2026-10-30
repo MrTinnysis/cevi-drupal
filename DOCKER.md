@@ -51,13 +51,13 @@ docker compose exec -T mariadb mysql -udrupal -pdrupal drupal < pfad/zum/dump.sq
 gunzip -c pfad/zum/dump.sql.gz | docker compose exec -T mariadb mysql -udrupal -pdrupal drupal
 
 # Cache leeren nach Import:
-docker compose exec drupal php vendor/bin/drush cr
+docker compose exec drupal vendor/bin/drush cr
 ```
 
 ### 4. Login-Link generieren
 
 ```bash
-docker compose exec drupal php vendor/bin/drush uli
+docker compose exec drupal vendor/bin/drush uli
 ```
 
 Seite unter http://localhost öffnen — fertig.
@@ -74,10 +74,10 @@ docker compose up -d --build
 docker compose down
 
 # Drush (Drupal CLI)
-docker compose exec drupal php vendor/bin/drush cr           # Cache leeren
-docker compose exec drupal php vendor/bin/drush cim -y       # Konfiguration importieren
-docker compose exec drupal php vendor/bin/drush cex -y       # Konfiguration exportieren
-docker compose exec drupal php vendor/bin/drush uli          # Admin-Login-Link
+docker compose exec drupal vendor/bin/drush cr           # Cache leeren
+docker compose exec drupal vendor/bin/drush cim -y       # Konfiguration importieren
+docker compose exec drupal vendor/bin/drush cex -y       # Konfiguration exportieren
+docker compose exec drupal vendor/bin/drush uli          # Admin-Login-Link
 
 # Composer
 docker compose exec drupal php /usr/bin/composer require drupal/token
