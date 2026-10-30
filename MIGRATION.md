@@ -13,9 +13,16 @@ ch41740.YYYY-MM-DD_HH-MM-SS.tar
 ## 2. Start the stack with a clean state
 
 ```bash
-docker compose down -v          # wipe all volumes
-docker compose up -d --build    # rebuild image and start fresh
+docker compose down -v                   # wipe all volumes
+docker compose build --pull              # rebuild, pulling fresh base images
+docker compose up -d                     # start fresh
 ```
+
+`--build` alone reuses whatever base images (`php:8.3-fpm-alpine`,
+`node:20-alpine`, `caddy:*`, `mariadb:*`) are already cached locally —
+it will NOT fetch newer patch releases of a floating tag. For a live
+migration, always `docker compose build --pull` first so you're running
+the latest PHP/MariaDB/Caddy security patches, not a stale cached layer.
 
 ## 3. Import the database
 

@@ -141,10 +141,18 @@ docker run --rm -v cevi-drupal_drupal_files:/target -v $(pwd):/src alpine \
 
 ```bash
 git pull
-docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+docker compose -f docker-compose.yml -f docker-compose.prod.yml build --pull
+docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 ```
 
 Der Entrypoint führt beim Start automatisch `drush updb` + `drush cr` aus.
+
+**Wichtig:** Die Basis-Images (`php:8.3-fpm-alpine`, `node:20-alpine`,
+`caddy:*`, `mariadb:*`) sind "floating" Tags — sie bekommen laufend
+Sicherheitspatches (z.B. neue PHP-Patch-Releases), aber ein einfaches
+`--build` ohne `--pull` nutzt weiterhin das lokal gecachte Image. Darum
+regelmässig (nicht nur bei Updates) mit `--pull` neu bauen, auch ohne
+inhaltliche Code-Änderungen, um aktuelle Patches zu bekommen.
 
 ---
 
