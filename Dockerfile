@@ -107,7 +107,9 @@ COPY docker/php/settings.docker.php ./web/sites/default/settings.current.php
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/web \
     && mkdir -p /var/www/html/web/sites/default/files \
-    && chown -R www-data:www-data /var/www/html/web/sites/default/files
+    && chown -R www-data:www-data /var/www/html/web/sites/default/files \
+    && mkdir -p /var/www/private \
+    && chown -R www-data:www-data /var/www/private
 
 COPY scripts/entrypoint.sh /entrypoint.sh
 COPY scripts/migrate-d8-db.php /var/www/html/scripts/migrate-d8-db.php
