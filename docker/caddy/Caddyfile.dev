@@ -2,6 +2,13 @@
     root * /var/www/html/web
     encode gzip
 
+    # Never execute PHP from the public files directory (classic
+    # webshell vector: uploaded/leftover .php files must be served as
+    # static files, not run) — Drupal's Apache .htaccess does this by
+    # default, Caddy needs it spelled out explicitly.
+    @phpInFiles path /sites/*/files/*.php
+    respond @phpInFiles 403
+
     php_fastcgi drupal:9000
 
     file_server
