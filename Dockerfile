@@ -110,6 +110,7 @@ RUN chown -R www-data:www-data /var/www/html \
     && chown -R www-data:www-data /var/www/html/web/sites/default/files
 
 COPY scripts/entrypoint.sh /entrypoint.sh
+COPY scripts/migrate-d8-db.php /var/www/html/scripts/migrate-d8-db.php
 COPY drupal/cevi-install.sh /cevi-install.sh
 RUN chmod +x /entrypoint.sh /cevi-install.sh
 
