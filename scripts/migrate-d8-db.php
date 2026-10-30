@@ -258,10 +258,26 @@ echo "Cleared entity bundle field map cache\n";
 // -------------------------------------------------------------------------
 // 12. Replace hardcoded internal domain links with relative paths
 //     cevisteffisburg.ch/... and cevistb.uber.space/... become /...
-//     Dead uber.space /sites/default/files/ image refs are removed
-//     (assets no longer exist there; DB may use Unicode curly quotes).
+//     Covers rich-text body/text fields, Link-type fields (field_link,
+//     stored as a URI, not HTML), and menu links (menu_link_content),
+//     including their *_revision tables. NOTE: the uber.space file paths
+//     (sites/default/files/...) are NOT dead -- the files are re-imported
+//     later in the migration (step 6), so we rewrite them too instead of
+//     deleting the surrounding markup.
+//
+//     IMPORTANT for anyone patching data on an *already running* site
+//     instead of at fresh-import time: menu links are resolved through
+//     Drupal's menu link plugin deriver, which is cached in cache_discovery/
+//     cache_menu and NOT invalidated by raw SQL writes (only by saving the
+//     entity through the Entity API, which fires the 'menu_link_content_list'
+//     cache tag). A raw UPDATE on menu_link_content_data on a live site will
+//     silently keep serving the old URL until you reload+resave each
+//     MenuLinkContent entity via ->save() (or until the cache rots on its
+//     own, which practically never happens since it's CACHE_PERMANENT).
+//     This script is safe because it always runs against a pristine import
+//     before any cache has been built.
 // -------------------------------------------------------------------------
-$link_tables = [
+$html_tables = [
     ['paragraph__field_text',          'field_text_value'],
     ['paragraph_revision__field_text', 'field_text_value'],
     ['node__body',                     'body_value'],
@@ -269,7 +285,7 @@ $link_tables = [
     ['block_content__body',            'body_value'],
     ['block_content_revision__body',   'body_value'],
 ];
-foreach ($link_tables as [$table, $col]) {
+foreach ($html_tables as [$table, $col]) {
     if (!$pdo->query("SHOW TABLES LIKE '$table'")->fetchColumn()) continue;
     // https://cevisteffisburg.ch/... and https://www.cevisteffisburg.ch/... -> /...
     $pdo->exec("UPDATE `$table` SET `$col` = REGEXP_REPLACE(`$col`,
@@ -279,14 +295,36 @@ foreach ($link_tables as [$table, $col]) {
     $pdo->exec("UPDATE `$table` SET `$col` = REGEXP_REPLACE(`$col`,
         'www[.]cevisteffisburg[.]ch/',
         '/') WHERE `$col` LIKE '%www.cevisteffisburg.ch/%'");
-    // cevistb.uber.space/PATH (non-file links) -> /PATH
+    // https://cevistb.uber.space/PATH (incl. file paths, now re-imported) -> /PATH
     $pdo->exec("UPDATE `$table` SET `$col` = REGEXP_REPLACE(`$col`,
-        'https?://cevistb[.]uber[.]space(/(?!sites/default/files)[^ \"<>]*)',
-        '\\\\1') WHERE `$col` REGEXP 'https?://cevistb[.]uber[.]space/(?!sites/default/files)'");
-    // Remove whole <p> containing dead uber.space /sites/default/files/ URLs
+        'https?://cevistb[.]uber[.]space(/[^ \"<>]*)',
+        '\\\\1') WHERE `$col` REGEXP 'https?://cevistb[.]uber[.]space/'");
+    // bare cevistb.uber.space/PATH (no protocol) -> /PATH
     $pdo->exec("UPDATE `$table` SET `$col` = REGEXP_REPLACE(`$col`,
-        '<p>[^<]*cevistb[.]uber[.]space/sites/default/files/[^<]*</p>[\\n]?',
-        '') WHERE `$col` LIKE '%cevistb.uber.space/sites/default/files/%'");
+        'cevistb[.]uber[.]space(/[^ \"<>]*)',
+        '\\\\1') WHERE `$col` LIKE '%cevistb.uber.space/%'");
+    echo "Replaced domain links in $table\n";
+}
+
+// Link-type fields store a bare URI (e.g. 'https://.../path'), not HTML --
+// rewrite to Drupal's 'internal:/path' scheme instead of a bare '/path',
+// since that's what the link widget itself produces for internal links.
+$uri_tables = [
+    ['menu_link_content_data',          'link__uri'],
+    ['menu_link_content_field_revision', 'link__uri'],
+    ['paragraph__field_link',            'field_link_uri'],
+    ['paragraph_revision__field_link',   'field_link_uri'],
+];
+foreach ($uri_tables as [$table, $col]) {
+    if (!$pdo->query("SHOW TABLES LIKE '$table'")->fetchColumn()) continue;
+    $is_menu_link = str_starts_with($table, 'menu_link_content');
+    $prefix = $is_menu_link ? 'internal:' : '';
+    $pdo->exec("UPDATE `$table` SET `$col` = CONCAT('$prefix', REGEXP_REPLACE(`$col`,
+        'https?://(www[.])?cevisteffisburg[.]ch',
+        '')) WHERE `$col` REGEXP 'https?://(www[.])?cevisteffisburg[.]ch' AND `$col` NOT LIKE 'internal:%'");
+    $pdo->exec("UPDATE `$table` SET `$col` = CONCAT('$prefix', REGEXP_REPLACE(`$col`,
+        'https?://cevistb[.]uber[.]space',
+        '')) WHERE `$col` REGEXP 'https?://cevistb[.]uber[.]space' AND `$col` NOT LIKE 'internal:%'");
     echo "Replaced domain links in $table\n";
 }
 echo "Hardcoded internal domain links replaced with relative paths\n";

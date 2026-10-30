@@ -92,18 +92,53 @@ docker compose exec drupal php vendor/drush/drush/drush.php theme:enable claro -
 ### Search for remaining hardcoded domain links
 
 Internal links pointing to old hostnames (`cevisteffisburg.ch`, `cevistb.uber.space`)
-should use relative paths instead. Scan the active config:
+should use relative paths instead. Step 4's `migrate-d8-db.php` already rewrites
+the main offenders (body/text fields, `field_link`, menu links), but content is
+messy -- always re-scan after import. Check **config** first:
 
 ```bash
 docker compose exec mariadb mariadb -udrupal -pchange-me drupal \
   -e "SELECT collection, name FROM config WHERE data LIKE '%cevisteffisburg.ch%' OR data LIKE '%cevistb.uber.space%';"
 ```
 
-The config/sync YMLs already have these replaced with relative links (e.g. `/form/contact-form`).
-After `drush cim` they should be gone. If any remain, re-run `drush cim -y` or update them manually.
+Then do a **full content/column sweep** (config alone misses body text, link fields,
+and menu links -- all of which are separate tables):
 
-Email addresses (`@cevisteffisburg.ch`) in webform handlers are intentional — they are
-the real recipient addresses and should remain.
+```bash
+docker compose exec mariadb mariadb -udrupal -pchange-me drupal -e "
+  SELECT 'menu_link_content_data' t, COUNT(*) c FROM menu_link_content_data WHERE link__uri LIKE '%uber.space%' OR link__uri LIKE '%cevisteffisburg.ch%'
+  UNION SELECT 'paragraph__field_link', COUNT(*) FROM paragraph__field_link WHERE field_link_uri LIKE '%uber.space%' OR field_link_uri LIKE '%cevisteffisburg.ch%'
+  UNION SELECT 'paragraph__field_text', COUNT(*) FROM paragraph__field_text WHERE field_text_value LIKE '%uber.space%' OR field_text_value LIKE '%cevisteffisburg.ch%';
+"
+```
+
+(Widen to any table/column you're unsure about with `information_schema.columns`
+if something still looks off on the live site.)
+
+**Important gotcha if you ever patch this data on an already-running site**
+(not at fresh-import time, when there's no cache yet): menu links are resolved
+through Drupal's menu link plugin deriver, which caches definitions permanently
+in `cache_discovery`/`cache_menu`. That cache is only invalidated by the
+`menu_link_content_list` tag, which fires when you save the entity through the
+**Entity API** — a raw `UPDATE menu_link_content_data ...` will silently keep
+serving the *old* URL indefinitely (surviving `drush cr` and even container
+restarts), because the stale derivative definition just gets rebuilt from... itself.
+Fix it properly with:
+
+```bash
+docker compose exec drupal vendor/bin/drush php:eval '
+$storage = \Drupal::entityTypeManager()->getStorage("menu_link_content");
+foreach ($storage->loadMultiple() as $entity) { $entity->save(); }
+'
+```
+
+The config/sync YMLs already have the main site links replaced with relative
+paths (e.g. `/form/contact-form`). After `drush cim` they should be gone. If any
+remain, re-run `drush cim -y` or update them manually.
+
+Email addresses (`@cevisteffisburg.ch`) in webform handlers, and the
+`admin@cevisteffisburg.ch` param in the Google Calendar iframe embed, are
+intentional — they are real addresses/identifiers, not links, and should remain.
 
 ### Remove temporary .bak files from the live server
 
